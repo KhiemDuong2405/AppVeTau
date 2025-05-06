@@ -1,4 +1,4 @@
-package com.example.font_end
+package com.khiemduong.font_end
 
 import io.flutter.embedding.android.FlutterActivity
 

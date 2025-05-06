@@ -45,7 +45,7 @@
     },
     {
       "name": "flutter",
-      "rootUri": "file:///Users/khiemduong/Documents/Mobile/AppVeTau/flutter/packages/flutter",
+      "rootUri": "file:///Users/khiemduong/Development/flutter/packages/flutter",
       "packageUri": "lib/",
       "languageVersion": "3.7"
     },
@@ -57,7 +57,7 @@
     },
     {
       "name": "flutter_test",
-      "rootUri": "file:///Users/khiemduong/Documents/Mobile/AppVeTau/flutter/packages/flutter_test",
+      "rootUri": "file:///Users/khiemduong/Development/flutter/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "3.7"
     },
@@ -111,7 +111,7 @@
     },
     {
       "name": "sky_engine",
-      "rootUri": "file:///Users/khiemduong/Documents/Mobile/AppVeTau/flutter/bin/cache/pkg/sky_engine",
+      "rootUri": "file:///Users/khiemduong/Development/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
       "languageVersion": "3.7"
     },
@@ -170,10 +170,10 @@
       "languageVersion": "3.7"
     }
   ],
-  "generated": "2025-05-06T14:45:47.734735Z",
+  "generated": "2025-05-06T15:36:04.025055Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
-  "flutterRoot": "file:///Users/khiemduong/Documents/Mobile/AppVeTau/flutter",
+  "flutterRoot": "file:///Users/khiemduong/Development/flutter",
   "flutterVersion": "3.29.3",
   "pubCache": "file:///Users/khiemduong/.pub-cache"
 }
