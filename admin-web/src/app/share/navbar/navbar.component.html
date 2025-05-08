@@ -1,0 +1,46 @@
+<div class="flex flex-col min-w-[250px] me-3">
+  <div class="flex w-full">
+    <img src="/images/logo.png" alt="Logo" style="width: 60px;">
+    <h1 class="flex justify-center items-center">FWB WarterBus</h1>
+  </div>
+  <nav class="flex flex-col w-full menu">
+    <ul class="menu-list flex flex-col flex-nowrap">
+      <li class="menu-item mt-2 flex-nowrap" routerLinkActive="active">
+        <a
+          routerLink="/dashboard"
+          class="menu-link flex items-center w-full gap-2 p-3"
+        >
+          <i class="fa-solid fa-house"></i>
+          <span class="menu-text">Dashboard</span>
+        </a>
+      </li>
+      <li class="menu-item mt-2" routerLinkActive="active">
+        <a
+          routerLink="/trip"
+          class="menu-link flex items-center w-full gap-2 p-3"
+        >
+          <i class="fa-solid fa-ferry"></i>
+          <span class="menu-text">Trip</span>
+        </a>
+      </li>
+      <li class="menu-item mt-2" routerLinkActive="active">
+        <a
+          routerLink="/ticket"
+          class="menu-link flex items-center w-full gap-2 p-3"
+        >
+          <i class="fa-solid fa-ticket"></i>
+          <span class="menu-text">Ticket</span>
+        </a>
+      </li>
+      <li class="menu-item mt-2" routerLinkActive="active">
+        <a
+          routerLink="/user"
+          class="menu-link flex items-center w-full gap-2 p-3"
+        >
+          <i class="fa-solid fa-user"></i>
+          <span class="menu-text">User</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

@@ -1,0 +1,60 @@
+<div class="flex flex-col">
+  <div class="tab flex max-w-[260px] border border-[#e5e7e9] rounded-lg m-3">
+    <a
+      routerLink="/trip/add-trip"
+      class="menu-link flex items-center justify-center gap-2 p-3 min-w-[130px] rounded-l-lg"
+      routerLinkActive="active"
+    >
+      <i class="fa-solid fa-plus"></i>
+      <span class="menu-text">Add Trip</span>
+    </a>
+    <a
+      routerLink="/trip/delete-trip"
+      class="menu-link flex items-center justify-center gap-2 p-3 min-w-[130px] rounded-r-lg"
+      routerLinkActive="active"
+    >
+      <i class="fa-solid fa-trash"></i>
+      <span class="menu-text">Delete Trip</span>
+    </a>
+  </div>
+  <div class="min-h-[150px] w-full mt-3 border-b border-b-[#e5e7e9] px-3">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="p-3">
+    <p class="text-[30px] font-medium text-gray-900 mb-2">Select date to display trips</p>
+    <div class="flex items-center gap-3">
+      <input
+        type="date"
+        [(ngModel)]="selectedDate"
+        class="border w-64 border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      <button
+        class="bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+        (click)="onShowTrip()"
+      >
+        Show Trip
+      </button>
+    </div>
+    <table *ngIf="trips.length > 0" class="w-full table-auto border border-gray-300 text-sm mt-4">
+      <thead class="bg-blue-600 text-white">
+        <tr>
+          <th class="border border-gray-300 px-4 py-2 text-left">Date</th>
+          <th class="border border-gray-300 px-4 py-2 text-left">From</th>
+          <th class="border border-gray-300 px-4 py-2 text-left">To</th>
+          <th class="border border-gray-300 px-4 py-2 text-left">Train Code</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let trip of trips">
+          <td class="border border-gray-300 px-4 py-2">{{ formatDate(trip.date) }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ trip.from }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ trip.to }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ trip.index + 1}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p *ngIf="trips.length === 0" class="text-gray-500 mt-4">No trips found.</p>
+
+  </div>
+</div>

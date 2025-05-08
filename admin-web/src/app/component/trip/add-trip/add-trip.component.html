@@ -1,0 +1,25 @@
+<p class="text-[30px] font-medium text-gray-900 mb-2">Select trip creation date</p>
+<div class="flex items-center gap-3">
+  <input
+    type="date"
+    [(ngModel)]="selectedDate"
+    [attr.min]="today"
+    class="border w-64 border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+  />
+  <button
+    class="bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+    (click)="onAddTrip()"
+  >
+    Create Trip
+  </button>
+</div>
+
+<div
+  *ngIf="isCreating"
+  class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center"
+>
+  <div class="bg-white p-6 rounded-lg shadow-lg text-center w-[300px]">
+    <p class="text-lg font-semibold mb-2">Creating trips...</p>
+    <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
+  </div>
+</div>

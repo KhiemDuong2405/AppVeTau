@@ -1,7 +1,6 @@
 import { rtdb } from "../firebase";
 import { Request, Response } from "express";
 
-
 export const getTrip = async (req: Request, res: Response) => {
   try {
     const { date, from, to } = req.query;
@@ -24,28 +23,54 @@ export const getTrip = async (req: Request, res: Response) => {
   }
 };
 
-export const getTripById = async (req: Request, res: Response) => {
+export const getTripByQuery = async (req: Request, res: Response) => {
   try {
     const { date, from, to, index } = req.query;
 
-    if (!date || !from || !to || !index) {
-      return res.status(400).json({
-        error: "Missing required query parameters: date, from, to, index",
-      });
+    if (!date) {
+      return res
+        .status(400)
+        .json({ error: "Missing required parameter: date" });
     }
 
-    const path = `VeTau/${date}/${from}/${to}/${index}`;
-    const snapshot = await rtdb.ref(path).once("value");
-    const tripDetail = snapshot.val();
+    let basePath = `VeTau/${date}`;
+    if (from) basePath += `/${from}`;
+    if (to) basePath += `/${to}`;
+    if (index) basePath += `/${index}`;
 
-    if (!tripDetail) {
-      return res.status(404).json({ message: "Trip not found" });
+    const ref = rtdb.ref(basePath);
+    const snapshot = await ref.once("value");
+    const data = snapshot.val();
+
+    if (!data) {
+      return res.status(404).json({ message: "No trip(s) found" });
     }
 
-    return res.status(200).json(tripDetail); 
+    const formatResult = (val: any) => {
+      if (typeof val === "object" && !Array.isArray(val)) {
+        const result: any[] = [];
+        for (const fromKey in val) {
+          for (const toKey in val[fromKey]) {
+            for (const indexKey in val[fromKey][toKey]) {
+              result.push({
+                date,
+                from: fromKey,
+                to: toKey,
+                index: indexKey,
+                ...val[fromKey][toKey][indexKey],
+              });
+            }
+          }
+        }
+        return result;
+      }
+      return val; 
+    };
+
+    return res.status(200).json(formatResult(data));
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Failed to fetch trip detail" });
+    console.error("Error fetching trip:", error);
+    return res.status(500).json({ error: "Failed to fetch trip(s)" });
   }
 };
 
@@ -55,17 +80,26 @@ export const createTrip = async (req: Request, res: Response) => {
       date,
       from,
       to,
-      index, 
+      index,
       giodi,
       phutdi,
       gioden,
       phutden,
-      row = 10, 
-      col = 12, 
+      row = 10,
+      col = 12,
     } = req.body;
 
-    if (!date || !from || !to || !index || giodi === undefined || phutdi === undefined || gioden === undefined || phutden === undefined) {
-      return res.status(400).json({ error: 'Missing required trip fields' });
+    if (
+      !date ||
+      !from ||
+      !to ||
+      !index ||
+      giodi === undefined ||
+      phutdi === undefined ||
+      gioden === undefined ||
+      phutden === undefined
+    ) {
+      return res.status(400).json({ error: "Missing required trip fields" });
     }
 
     const ghetrong: Record<string, Record<string, boolean>> = {};
@@ -97,25 +131,29 @@ export const deleteTrip = async (req: Request, res: Response) => {
   try {
     const { date, from, to, index } = req.query;
 
-    if (!date || !from || !to || !index) {
-      return res.status(400).json({
-        error: "Missing required query parameters: date, from, to, index",
-      });
+    if (!date) {
+      return res
+        .status(400)
+        .json({ error: "Missing required parameter: date" });
     }
 
-    const path = `VeTau/${date}/${from}/${to}/${index}`;
-    const snapshot = await rtdb.ref(path).once("value");
+    let basePath = `VeTau/${date}`;
+    if (from) basePath += `/${from}`;
+    if (to) basePath += `/${to}`;
+    if (index) basePath += `/${index}`;
+
+    const ref = rtdb.ref(basePath);
+    const snapshot = await ref.once("value");
 
     if (!snapshot.exists()) {
-      return res.status(404).json({ message: "Trip not found" });
+      return res.status(404).json({ message: "No matching trip(s) found" });
     }
 
-    await rtdb.ref(path).remove();
-
-    return res.status(200).json({ message: "Trip deleted successfully" });
+    await ref.remove();
+    return res.status(200).json({ message: "Trip(s) deleted successfully" });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Failed to delete trip" });
+    console.error("Delete error:", error);
+    return res.status(500).json({ error: "Failed to delete trip(s)" });
   }
 };
 
